@@ -6,6 +6,33 @@ struct VertexData
 	XMFLOAT3 Pos;     //顶点位置
 	XMFLOAT3 Normal;  //法向量
 	XMFLOAT2 Tex;     //纹理坐标
+	VertexData(XMFLOAT3 in_pos, XMFLOAT3 in_normal, XMFLOAT2 in_tex)
+	{
+		Pos = in_pos;
+		Normal = in_normal;
+		Tex = in_tex;
+	}
+
+	VertexData(XMFLOAT3 in_pos, XMFLOAT3 in_normal)
+	{
+		Pos = in_pos;
+		Normal = in_normal;
+		Tex = XMFLOAT2(0,0);
+	}
+
+	VertexData(XMFLOAT3 in_pos, XMFLOAT2 in_tex)
+	{
+		Pos = in_pos;
+		Normal = XMFLOAT3(0,0,0);
+		Tex = in_tex;
+	}
+
+	VertexData(XMFLOAT3 in_pos)
+	{
+		Pos = in_pos;
+		Normal = XMFLOAT3(0, 0, 0);
+		Tex = XMFLOAT2(0, 0);
+	}
 };
 
 struct VertexPos
@@ -15,7 +42,7 @@ struct VertexPos
 
 struct MeshData
 {
-	std::vector<VertexData> vertices;  //几何体顶点信息集合
+	std::vector<VertexData> vertices;	 //几何体顶点信息集合
 	std::vector<WORD> indices;           //三角形索引集
 };
 
