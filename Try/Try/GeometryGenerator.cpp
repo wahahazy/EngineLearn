@@ -1,5 +1,18 @@
 #include "GeometryGenerator.h"
 
+void MeshData::VertexDataUseState(bool in_use_position, bool in_use_normal, bool in_use_texcoord)
+{
+	m_use_position = in_use_position;
+	m_use_normal = in_use_normal;
+	m_use_texcoord = in_use_texcoord;
+}
+
+void MeshData::AddVertexData(VertexData in_vertex_data)
+{
+	vertices.push_back(in_vertex_data);
+	indices.push_back(vertices.size() - 1);
+}
+
 GeometryGenerator::GeometryGenerator()
 {
 

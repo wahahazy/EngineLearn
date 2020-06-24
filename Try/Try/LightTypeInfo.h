@@ -57,4 +57,7 @@ struct Material
 	XMFLOAT4 Ambient;
 	XMFLOAT4 Diffuse;
 	XMFLOAT4 Specular; // w = 此材质的光泽度
+
+	const char* m_texture_path = "";
+	const char* m_name = "";
 };
