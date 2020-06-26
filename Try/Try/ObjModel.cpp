@@ -46,7 +46,7 @@ namespace obj
 					else if (split_strs[0] == "v")
 					{
 						// d3d使用的是左手坐标系，obj使用的是右手坐标系
-						XMFLOAT3 pos = XMFLOAT3(std::atof(split_strs[1].c_str()), std::atof(split_strs[2].c_str()), -std::atof(split_strs[3].c_str()));
+						XMFLOAT3 pos = XMFLOAT3((float)std::atof(split_strs[1].c_str()), (float)std::atof(split_strs[2].c_str()), -(float)std::atof(split_strs[3].c_str()));
 						positions.push_back(pos);
 						XMVECTOR vec_pos = XMLoadFloat3(&pos);
 						boundingbox_max = XMVectorMax(boundingbox_max, vec_pos);
@@ -55,12 +55,12 @@ namespace obj
 					else if (split_strs[0] == "vt")
 					{
 						// d3d的纹理坐标起始点在左上角
-						texcoords.push_back(XMFLOAT2(std::atof(split_strs[1].c_str()), 1.0f - std::atof(split_strs[2].c_str())));
+						texcoords.push_back(XMFLOAT2((float)std::atof(split_strs[1].c_str()), 1.0f - (float)std::atof(split_strs[2].c_str())));
 					}
 					else if (split_strs[0] == "vn")
 					{
 						// d3d使用的是左手坐标系，obj使用的是右手坐标系
-						normals.push_back(XMFLOAT3(std::atof(split_strs[1].c_str()), std::atof(split_strs[2].c_str()), -std::atof(split_strs[3].c_str())));
+						normals.push_back(XMFLOAT3((float)std::atof(split_strs[1].c_str()), (float)std::atof(split_strs[2].c_str()), -(float)std::atof(split_strs[3].c_str())));
 					}
 					else if (split_strs[0] == "usemtl")
 					{
@@ -77,7 +77,7 @@ namespace obj
 						//右手坐标系转成了左手坐标系。若还是保持原有的顺时针或者逆时针，则三角形顶点顺序要反一下。
 						std::size_t start, index;
 						uint32_t pos_index, normal_index, tex_index;
-						for (int32_t i = split_strs.size() - 1; i >= 1; i--)
+						for (int32_t i = int32_t(split_strs.size()) - 1; i >= 1; i--)
 						{
 							start = 0, index = 0;
 							pos_index = 0, normal_index = 0, tex_index = 0;
@@ -141,25 +141,25 @@ namespace obj
 					}
 					else if (split_strs[0] == "Ns")
 					{
-						temp_mtl->m_specular.w = atof(split_strs[1].c_str());
+						temp_mtl->m_specular.w = (float)atof(split_strs[1].c_str());
 					}
 					else if (split_strs[0] == "Ka")
 					{
-						temp_mtl->m_ambient.x = atof(split_strs[1].c_str());
-						temp_mtl->m_ambient.y = atof(split_strs[2].c_str());
-						temp_mtl->m_ambient.z = atof(split_strs[3].c_str());
+						temp_mtl->m_ambient.x = (float)atof(split_strs[1].c_str());
+						temp_mtl->m_ambient.y = (float)atof(split_strs[2].c_str());
+						temp_mtl->m_ambient.z = (float)atof(split_strs[3].c_str());
 					}
 					else if (split_strs[0] == "Kd")
 					{
-						temp_mtl->m_diffuse.x = atof(split_strs[1].c_str());
-						temp_mtl->m_diffuse.y = atof(split_strs[2].c_str());
-						temp_mtl->m_diffuse.z = atof(split_strs[3].c_str());
+						temp_mtl->m_diffuse.x = (float)atof(split_strs[1].c_str());
+						temp_mtl->m_diffuse.y = (float)atof(split_strs[2].c_str());
+						temp_mtl->m_diffuse.z = (float)atof(split_strs[3].c_str());
 					}
 					else if (split_strs[0] == "Ks")
 					{
-						temp_mtl->m_specular.x = atof(split_strs[1].c_str());
-						temp_mtl->m_specular.y = atof(split_strs[2].c_str());
-						temp_mtl->m_specular.z = atof(split_strs[3].c_str());
+						temp_mtl->m_specular.x = (float)atof(split_strs[1].c_str());
+						temp_mtl->m_specular.y = (float)atof(split_strs[2].c_str());
+						temp_mtl->m_specular.z = (float)atof(split_strs[3].c_str());
 					}
 					else if (split_strs[0] == "Ni")
 					{
@@ -167,8 +167,8 @@ namespace obj
 					}
 					else if (split_strs[0] == "d")
 					{
-						temp_mtl->m_ambient.w = atof(split_strs[1].c_str());
-						temp_mtl->m_diffuse.w = atof(split_strs[1].c_str());
+						temp_mtl->m_ambient.w = (float)atof(split_strs[1].c_str());
+						temp_mtl->m_diffuse.w = (float)atof(split_strs[1].c_str());
 					}
 					else if (split_strs[0] == "illum")
 					{
@@ -234,9 +234,9 @@ namespace obj
 				auto mtl_info = mtl_it->second;				
 				auto texture_path = (mtl_info->m_texture_path).c_str();
 
-				int wchar_size = MultiByteToWideChar(CP_OEMCP, 0, texture_path, strlen(texture_path) + 1, NULL, 0);
+				std::size_t wchar_size = MultiByteToWideChar(CP_OEMCP, 0, texture_path, int(strlen(texture_path) + 1), NULL, 0);
 				wchar_t *textrue_path_wchar = new wchar_t[wchar_size];
-				MultiByteToWideChar(CP_OEMCP, 0, texture_path, strlen(texture_path) + 1, textrue_path_wchar, wchar_size);
+				MultiByteToWideChar(CP_OEMCP, 0, texture_path, int(strlen(texture_path) + 1), textrue_path_wchar, int(wchar_size));
 				ComPtr<ID3D11ShaderResourceView> texture;
 				HRESULT hr = CreateWICTextureFromFile(in_g_pd3dDevice.Get(), textrue_path_wchar, nullptr, texture.GetAddressOf());
 				if (FAILED(hr))

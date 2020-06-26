@@ -156,7 +156,7 @@ bool GameD3d::InitResource()
 	//狐狸设置在合适的状态
 	m_fox.SetScaleMatrix(XMMatrixScaling(0.06f, 0.06f, 0.06f));
 	m_fox.SetRotationMatrix(-XM_PIDIV4);
-	m_fox.SetTranslationMatrix(-12.0f, 0.0f, 25.0f);
+	m_fox.SetTranslationMatrix(-15.0f, 0.0f, 28.0f);
 
 
 	/* 初始化内部模型*/

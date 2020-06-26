@@ -42,6 +42,7 @@ map_Kd texture.png 为漫反射指定颜色纹理文件</br>
 先当成一定是v/vt/vn这样的格式进行读取。
 
 </br>
-疑惑：</br>
-Material() { memset(this, 0, sizeof(Material)); }</br>
-memset为什么会导致我数据写不进去？
+一些点：</br>
+Q1：MaterialInfo() { memset(this, 0, sizeof(MaterialInfo)); }</br>
+memset为什么会导致string类型数据写不进去？
+答：memset初始话的时候，string类型的capacity为0。因此一直写不进去。
