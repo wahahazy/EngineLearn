@@ -149,6 +149,16 @@ bool GameD3d::InitResource()
 	house.SetRotationMatrix(-XM_PIDIV2);
 	house.SetTranslationMatrix(-30.0f, houseBox.Extents.y - houseBox.Center.y, 10.0f);
 
+	//初始化狐狸
+	obj_reader.ReadObjModel("Model\\low-poly-fox-by-pixelmannen.obj");
+	m_fox.CreateModel(g_pd3dDevice, obj_reader);
+
+	//狐狸设置在合适的状态
+	m_fox.SetScaleMatrix(XMMatrixScaling(0.06f, 0.06f, 0.06f));
+	m_fox.SetRotationMatrix(-XM_PIDIV4);
+	m_fox.SetTranslationMatrix(-12.0f, 0.0f, 25.0f);
+
+
 	/* 初始化内部模型*/
 	float gLength = 10, gWidth = 10, gCenterY = 0; //地面的长宽和所处的平面高度
 	int gNumber = 150;
@@ -166,8 +176,6 @@ bool GameD3d::InitResource()
 	car.CreateCarModel(cLength, cHeight, cWidth, wRadius, wHeight, g_pd3dDevice);
 	car.SetCarPosition(carX, carY, carZ);
 	car.SetHouseBoundingPos({ houseBox.Center.x - houseBox.Extents.x + 6,houseBox.Center.x + houseBox.Extents.x ,houseBox.Center.z - houseBox.Extents.z + 2,houseBox.Center.z + houseBox.Extents.z + 3 });
-
-
 
 	//初始化第一人称摄像机
 	// Initialize the view matrix
@@ -325,6 +333,7 @@ void GameD3d::RenderSceneToTexture()
 	ground.Draw(g_pImmediateContext, shadowMapRenderDir);
 	car.Draw(g_pImmediateContext, shadowMapRenderDir);
 	house.Draw(g_pImmediateContext, shadowMapRenderDir);
+	m_fox.Draw(g_pImmediateContext, shadowMapRenderDir);
 	shadowMapDirectionalLight = shadowMapRenderDir.GetShadowMapTexture();
 
 	//生成聚光灯的深度图
@@ -336,7 +345,7 @@ void GameD3d::RenderSceneToTexture()
 	ground.Draw(g_pImmediateContext, shadowMapRenderSpot);
 	car.Draw(g_pImmediateContext, shadowMapRenderSpot);
 	house.Draw(g_pImmediateContext, shadowMapRenderSpot);
-
+	m_fox.Draw(g_pImmediateContext, shadowMapRenderSpot);
 	shadowMapSpotLight = shadowMapRenderSpot.GetShadowMapTexture();
 
 }
@@ -361,6 +370,7 @@ void GameD3d::RenderScene()
 
 	house.Draw(g_pImmediateContext, gameObjectRender);
 
+	m_fox.Draw(g_pImmediateContext, gameObjectRender);
 
 	skyBoxRender.SetRenderDefault(g_pImmediateContext);
 	if (cameraMode == CameraMode::FirstPerson)

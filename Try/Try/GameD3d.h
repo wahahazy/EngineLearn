@@ -5,6 +5,7 @@
 #include "SkyBox.h"
 #include "ExternalModel.h"
 #include "ShadowMapRender.h"
+#include "ObjModel.h"
 
 class GameD3d : public BasicD3d
 {
@@ -26,6 +27,7 @@ private:
 	bool InitTexture();   //初始化纹理
 
 	ObjReader objReader;				// 模型读取对象
+	obj::ObjReader obj_reader;
 
 	//渲染管线
 	ShadowMapRender shadowMapRenderDir;    //渲染生成平行光深度图的渲染管线
@@ -39,6 +41,7 @@ private:
 	GameObject ground;					//地面
 	ExternalModel house;
 	SkyBox skyBox;
+	obj::ObjModel m_fox;
 
 	//材质
 	Material materialGround;

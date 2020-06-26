@@ -53,6 +53,12 @@ struct SpotLight
 struct Material
 {
 	Material() { memset(this, 0, sizeof(Material)); }
+	Material(XMFLOAT4 in_ambient, XMFLOAT4 in_diffuse, XMFLOAT4 in_specular)
+	{
+		Ambient = in_ambient;
+		Diffuse = in_diffuse;
+		Specular = in_specular;
+	}
 
 	XMFLOAT4 Ambient;
 	XMFLOAT4 Diffuse;
